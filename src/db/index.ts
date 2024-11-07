@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export const connectDB = (): void => {
-    mongoose.connect('mongodb://localhost:27017');
+    mongoose.connect('mongodb://localhost:27017/beam');
     mongoose.connection.on('connected', () => {
         console.log('MongoDB connected');
     });
