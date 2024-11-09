@@ -1,5 +1,14 @@
 import mongoose, { Schema } from "mongoose";
 
+interface Todo extends mongoose.Document {
+    title: string
+    description: string
+    completed: boolean
+    createdAt?: Date
+    completedAt?: Date
+    user: Schema.Types.ObjectId
+}
+
 const todoSchema: Schema = new Schema({
     title: { type: String, required: true },
     description: { type: String, default: '', required: true },
@@ -13,7 +22,7 @@ const Todo = mongoose.model('Todo', todoSchema);
 
 export const getTodos = async () => Todo.find();
 export const getTodosByUser = async (id: string) => Todo.find({ user: id });
-export const createTodo = async (values: Record<string, any>) => new Todo(values).save();
+export const createTodo = async (todo: Todo) => new Todo(todo).save();
 export const updateTodoTitleById = async (id: string, title: string) => Todo.findByIdAndUpdate(id, { title });
 export const updateTodoDescriptionById = async (id: string, description: string) => Todo.findByIdAndUpdate(id, { description });
 export const checkTodoById = async (id: string) => Todo.findByIdAndUpdate(id, { completed: true, completedAt: Date.now() });
