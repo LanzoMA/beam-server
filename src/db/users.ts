@@ -19,16 +19,14 @@ const UserModel: mongoose.Model<User> = mongoose.model<User>('User', userSchema)
 
 export const getUsers = async () => UserModel.find();
 
-export const getUserIdByEmail = async (email: string): Promise<String> => {
+export const getUserIdByEmail = async (email: string): Promise<Schema.Types.ObjectId> => {
     const user: mongoose.Document | null = await UserModel.findOne({ email }).exec();
 
     if (!user) {
         throw Error('User not found');
     }
 
-    const userId = user._id as Schema.Types.ObjectId
-
-    return userId.toString();
+    return user._id as Schema.Types.ObjectId;
 }
 
 export const createUser = async (user: UserStructure): Promise<void> => { new UserModel(user).save() };
