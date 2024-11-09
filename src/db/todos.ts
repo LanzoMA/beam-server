@@ -1,5 +1,11 @@
 import mongoose, { Schema } from "mongoose";
 
+interface TodoStructure {
+    title: string;
+    description?: string;
+    user: Schema.Types.ObjectId;
+};
+
 interface Todo extends mongoose.Document {
     title: string
     description: string
@@ -9,7 +15,7 @@ interface Todo extends mongoose.Document {
     user: Schema.Types.ObjectId
 }
 
-const todoSchema: Schema = new Schema({
+const todoSchema: Schema<Todo> = new Schema<Todo>({
     title: { type: String, required: true },
     description: { type: String, default: '', required: true },
     completed: { type: Boolean, default: false, required: true },
@@ -18,13 +24,13 @@ const todoSchema: Schema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
 });
 
-const Todo = mongoose.model('Todo', todoSchema);
+const TodoModel: mongoose.Model<Todo> = mongoose.model<Todo>('Todo', todoSchema);
 
-export const getTodos = async () => Todo.find();
-export const getTodosByUser = async (id: string) => Todo.find({ user: id });
-export const createTodo = async (todo: Todo) => new Todo(todo).save();
-export const updateTodoTitleById = async (id: string, title: string) => Todo.findByIdAndUpdate(id, { title });
-export const updateTodoDescriptionById = async (id: string, description: string) => Todo.findByIdAndUpdate(id, { description });
-export const checkTodoById = async (id: string) => Todo.findByIdAndUpdate(id, { completed: true, completedAt: Date.now() });
-export const uncheckTodoById = async (id: string) => Todo.findByIdAndUpdate(id, { completed: false, completedAt: null });
-export const deleteTodoById = async (id: string) => Todo.findByIdAndDelete(id);  
+export const getTodos = async () => TodoModel.find();
+export const getTodosByUser = async (id: string) => TodoModel.find({ user: id });
+export const createTodo = async (todo: TodoStructure) => new TodoModel(todo).save();
+export const updateTodoTitleById = async (id: string, title: string) => TodoModel.findByIdAndUpdate(id, { title });
+export const updateTodoDescriptionById = async (id: string, description: string) => TodoModel.findByIdAndUpdate(id, { description });
+export const checkTodoById = async (id: string) => TodoModel.findByIdAndUpdate(id, { completed: true, completedAt: Date.now() });
+export const uncheckTodoById = async (id: string) => TodoModel.findByIdAndUpdate(id, { completed: false, completedAt: null });
+export const deleteTodoById = async (id: string) => TodoModel.findByIdAndDelete(id);  
