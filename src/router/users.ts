@@ -15,7 +15,7 @@ export default (router: express.Router) => {
             return;
         }
 
-        await createUser(email, password);
+        await createUser({ email, password });
 
         res.send('New user created');
     });
