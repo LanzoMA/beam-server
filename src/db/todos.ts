@@ -17,7 +17,7 @@ interface Todo extends mongoose.Document {
 
 const todoSchema: Schema<Todo> = new Schema<Todo>({
     title: { type: String, required: true },
-    description: { type: String, default: '', required: true },
+    description: { type: String, required: false },
     completed: { type: Boolean, default: false, required: true },
     createdAt: { type: Date, default: Date.now, required: true },
     completedAt: { type: Date, required: false },
