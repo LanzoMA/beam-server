@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { checkTodoById, createTodo, getTodos, uncheckTodoById, updateTodoDescriptionById, updateTodoTitleById } from '../db/todos';
+import { checkTodoById, createTodo, deleteTodoById, getTodos, uncheckTodoById, updateTodoDescriptionById, updateTodoTitleById } from '../db/todos';
 import { getUserIdByEmail } from '../db/users';
 import { Schema } from 'mongoose';
 
@@ -62,5 +62,18 @@ export const updateTodoHandler = async (req: Request, res: Response): Promise<vo
 };
 
 export const deleteTodoHandler = async (req: Request, res: Response): Promise<void> => {
+    const { email, password, id } = req.body;
 
+    if (!email || !password) {
+        res.status(400).send('Email and password was not found');
+        return;
+    }
+
+    if (!id) {
+        res.status(400).send('No todo given to delete');
+        return;
+    }
+
+    await deleteTodoById(id);
+    res.send('Successfully deleted todo');
 };
