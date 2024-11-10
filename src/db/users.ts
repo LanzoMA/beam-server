@@ -39,8 +39,18 @@ export const getUserPasswordByEmail = async (email: string): Promise<string> => 
     return user.password;
 }
 
-export const createUser = async (user: UserStructure): Promise<void> => { new UserModel(user).save() };
-export const updateUserEmailById = async (id: string, email: string): Promise<void> => { UserModel.findByIdAndUpdate(id, { email }) };
-export const updateUserPasswordById = async (id: string, password: string): Promise<void> => { UserModel.findByIdAndUpdate(id, { password }) };
-export const deleteUserById = async (id: string): Promise<void> => { UserModel.findByIdAndDelete(id) };
-export const deleteUserByEmail = async (email: string): Promise<void> => { UserModel.deleteOne({ email }).exec(); }
+export const createUser = async (user: UserStructure): Promise<void> => {
+    new UserModel(user).save()
+};
+
+export const updateUserEmailByEmail = async (oldEmail: string, newEmail: string): Promise<void> => {
+    UserModel.updateOne({ email: oldEmail }, { email: newEmail }).exec();
+};
+
+export const updateUserPasswordByEmail = async (email: string, password: string): Promise<void> => {
+    UserModel.updateOne({ email }, { password }).exec();
+};
+
+export const deleteUserByEmail = async (email: string): Promise<void> => {
+    UserModel.deleteOne({ email }).exec();
+};
