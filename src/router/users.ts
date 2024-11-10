@@ -1,22 +1,11 @@
-import express from 'express';
-import { createUser, getUsers } from '../db/users';
+import { Router } from 'express';
+import { register, getUsersHandler, login, logout, updateUserHandler, deleteUserHandler } from '../controllers/users';
 
-export default (router: express.Router) => {
-    router.get('/users', async (req: express.Request, res: express.Response) => {
-        const users = await getUsers();
-        res.json(users);
-    });
-
-    router.post('/users', async (req: express.Request, res: express.Response) => {
-        const { email, password } = req.body;
-
-        if (!email || !password) {
-            res.status(400).send('Email/Password was not given');
-            return;
-        }
-
-        await createUser({ email, password });
-
-        res.send('New user created');
-    });
+export default (router: Router) => {
+    router.post('/register', register);
+    router.post('/login', login);
+    router.post('/logout', logout);
+    router.get('/users', getUsersHandler);
+    router.put('/users', updateUserHandler);
+    router.delete('/users', deleteUserHandler);
 }
