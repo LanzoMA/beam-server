@@ -27,6 +27,16 @@ export const getUserIdByEmail = async (email: string): Promise<Schema.Types.Obje
     }
 
     return user._id as Schema.Types.ObjectId;
+};
+
+export const getUserPasswordByEmail = async (email: string): Promise<string> => {
+    const user = await UserModel.findOne({ email }).exec();
+
+    if (!user) {
+        throw Error('User not found');
+    }
+
+    return user.password;
 }
 
 export const createUser = async (user: UserStructure): Promise<void> => { new UserModel(user).save() };
