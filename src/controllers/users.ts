@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
-import { createUser, getUsers } from '../db/users';
+import { createUser, deleteUserByEmail, getUsers } from '../db/users';
 import { authenticate } from '../helpers/authenticate';
 
 export const register = async (req: Request, res: Response) => {
@@ -55,5 +55,16 @@ export const updateUserHandler = async (req: Request, res: Response) => {
 };
 
 export const deleteUserHandler = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
 
+    const isPasswordCorrect = await authenticate(email, password);
+
+    if (!isPasswordCorrect) {
+        res.send('Incorrect credentials given');
+        return;
+    }
+
+    await deleteUserByEmail(email);
+
+    res.send('Successfully deleted user');
 };

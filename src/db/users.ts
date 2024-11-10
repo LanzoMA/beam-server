@@ -43,3 +43,4 @@ export const createUser = async (user: UserStructure): Promise<void> => { new Us
 export const updateUserEmailById = async (id: string, email: string): Promise<void> => { UserModel.findByIdAndUpdate(id, { email }) };
 export const updateUserPasswordById = async (id: string, password: string): Promise<void> => { UserModel.findByIdAndUpdate(id, { password }) };
 export const deleteUserById = async (id: string): Promise<void> => { UserModel.findByIdAndDelete(id) };
+export const deleteUserByEmail = async (email: string): Promise<void> => { UserModel.deleteOne({ email }).exec(); }
