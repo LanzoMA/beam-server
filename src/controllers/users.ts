@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
-import { createUser, deleteUserByEmail, getUsers, updateUserEmailByEmail, updateUserPasswordByEmail } from '../db/users';
+import { createUser, deleteUserByEmail, getUsers, updateUserEmailByEmail, updateUserPasswordByEmail } from '../db/services/users';
 import { authenticate } from '../helpers/authenticate';
 
 export const register = async (req: Request, res: Response) => {

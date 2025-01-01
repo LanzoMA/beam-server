@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { getUserPasswordByEmail } from "../db/users";
+import { getUserPasswordByEmail } from "../db/services/users";
 
 export const authenticate = async (email: string, password: string): Promise<boolean> => {
     try {

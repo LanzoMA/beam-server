@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { checkTodoById, createTodo, deleteTodoById, getTodos, uncheckTodoById, updateTodoDescriptionById, updateTodoTitleById } from '../db/todos';
-import { getUserIdByEmail } from '../db/users';
+import { checkTodoById, createTodo, deleteTodoById, getTodos, uncheckTodoById, updateTodoDescriptionById, updateTodoTitleById } from '../db/services/todos';
+import { getUserIdByEmail } from '../db/services/users';
 import { Schema } from 'mongoose';
 
 export const getTodosHandler = async (req: Request, res: Response): Promise<void> => {
