@@ -1,10 +1,10 @@
 import mongoose, { Schema } from 'mongoose';
-import { UserModel, UserStructure } from '../models/users';
+import { User, UserInput } from '../models/users';
 
-export const getUsers = async () => UserModel.find();
+export const getUsers = async () => User.find();
 
 export const getUserIdByEmail = async (email: string): Promise<Schema.Types.ObjectId> => {
-    const user: mongoose.Document | null = await UserModel.findOne({ email }).exec();
+    const user: mongoose.Document | null = await User.findOne({ email }).exec();
 
     if (!user) {
         throw Error('User not found');
@@ -14,7 +14,7 @@ export const getUserIdByEmail = async (email: string): Promise<Schema.Types.Obje
 };
 
 export const getUserPasswordByEmail = async (email: string): Promise<string> => {
-    const user = await UserModel.findOne({ email }).exec();
+    const user = await User.findOne({ email }).exec();
 
     if (!user) {
         throw Error('User not found');
@@ -23,18 +23,18 @@ export const getUserPasswordByEmail = async (email: string): Promise<string> => 
     return user.password;
 }
 
-export const createUser = async (user: UserStructure): Promise<void> => {
-    new UserModel(user).save()
+export const createUser = async (user: UserInput): Promise<void> => {
+    new User(user).save()
 };
 
 export const updateUserEmailByEmail = async (oldEmail: string, newEmail: string): Promise<void> => {
-    UserModel.updateOne({ email: oldEmail }, { email: newEmail }).exec();
+    User.updateOne({ email: oldEmail }, { email: newEmail }).exec();
 };
 
 export const updateUserPasswordByEmail = async (email: string, password: string): Promise<void> => {
-    UserModel.updateOne({ email }, { password }).exec();
+    User.updateOne({ email }, { password }).exec();
 };
 
 export const deleteUserByEmail = async (email: string): Promise<void> => {
-    UserModel.deleteOne({ email }).exec();
+    User.deleteOne({ email }).exec();
 };
