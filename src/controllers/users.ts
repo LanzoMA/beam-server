@@ -29,12 +29,12 @@ export const login = async (req: Request, res: Response) => {
     try {
         const isPasswordCorrect = await authenticate(email, password);
 
-        if (isPasswordCorrect) {
-            res.send('Successfully logged in');
+        if (!isPasswordCorrect) {
+            res.send('Incorrect credentials');
             return;
         }
 
-        res.send('Incorrect credentials');
+        // Todo: Generate access token and refresh token and return as json
     } catch (error) {
         console.log(error);
         res.send(500).send('Something went wrong');
@@ -42,7 +42,7 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const logout = async (req: Request, res: Response) => {
-
+    // Todo: Delete refresh token
 };
 
 export const getUsersHandler = async (req: Request, res: Response) => {
